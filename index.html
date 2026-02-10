@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Heuristics - Python Code Quality Analyzer</title>
+    <link rel="stylesheet" href="css/styles_new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fab fa-python"></i>
+                <span>Code Heuristics</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#analyze" class="nav-link">Analyze</a></li>
+                <li><a href="#metrics" class="nav-link">Metrics Guide</a></li>
+                <li><a href="#batch" class="nav-link">Batch Analysis</a></li>
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#" class="nav-link" id="loginBtn">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Python Code Quality Analysis</h1>
+                <p class="hero-subtitle">Comprehensive metrics for Python code including cyclomatic complexity, nesting depth, documentation coverage, and more. Perfect for educators analyzing student submissions or teams maintaining code quality.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('analyze')">
+                        <i class="fas fa-file-code"></i> Analyze Python Code
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('metrics')">
+                        <i class="fas fa-info-circle"></i> Learn About Metrics
+                    </button>
+                </div>
+                <div class="supported-formats">
+                    <span class="format-badge"><i class="fab fa-python"></i> .py files</span>
+                    <span class="format-badge"><i class="fas fa-book"></i> .ipynb notebooks</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="metric-cards-preview">
+                    <div class="mini-metric-card">
+                        <span class="metric-icon">🔄</span>
+                        <span class="metric-label">Complexity</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                    <div class="mini-metric-card">
+                        <span class="metric-icon">📊</span>
+                        <span class="metric-label">LOC</span>
+                        <span class="metric-value">245</span>
+                    </div>
+                    <div class="mini-metric-card">
+                        <span class="metric-icon">📝</span>
+                        <span class="metric-label">Comments</span>
+                        <span class="metric-value">35%</span>
+                    </div>
+                    <div class="mini-metric-card">
+                        <span class="metric-icon">🔍</span>
+                        <span class="metric-label">Nesting</span>
+                        <span class="metric-value">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Guide Section -->
+    <section id="metrics" class="metrics-section">
+        <div class="container">
+            <h2 class="section-title">Understanding Code Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Lines of Code (LOC)</h3>
+                    </div>
+                    <p>Counts actual code lines, excluding blank lines and comments. Helps measure code size and complexity.</p>
+                    <div class="metric-range">
+                        <span class="good">Good: < 300 lines/file</span>
+                        <span class="warning">Warning: 300-500 lines</span>
+                        <span class="danger">Critical: > 500 lines</span>
+                    </div>
+                </div>
+
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Cyclomatic Complexity</h3>
+                    </div>
+                    <p>Measures the number of linearly independent paths through code. Higher values indicate more complex, harder-to-test code.</p>
+                    <div class="metric-range">
+                        <span class="good">Good: 1-10</span>
+                        <span class="warning">Warning: 11-20</span>
+                        <span class="danger">Critical: > 20</span>
+                    </div>
+                </div>
+
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>Nesting Depth</h3>
+                    </div>
+                    <p>Maximum depth of nested control structures. Deep nesting makes code harder to read and maintain.</p>
+                    <div class="metric-range">
+                        <span class="good">Good: ≤ 3 levels</span>
+                        <span class="warning">Warning: 4 levels</span>
+                        <span class="danger">Critical: ≥ 5 levels</span>
+                    </div>
+                </div>
+
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-comments"></i>
+                        <h3>Comment Ratio</h3>
+                    </div>
+                    <p>Percentage of comment lines to total lines. Good documentation improves code maintainability.</p>
+                    <div class="metric-range">
+                        <span class="danger">Low: < 10%</span>
+                        <span class="warning">Medium: 10-20%</span>
+                        <span class="good">Good: > 20%</span>
+                    </div>
+                </div>
+
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Docstring Coverage</h3>
+                    </div>
+                    <p>Percentage of functions and classes with docstrings. Essential for API documentation.</p>
+                    <div class="metric-range">
+                        <span class="danger">Low: < 50%</span>
+                        <span class="warning">Medium: 50-80%</span>
+                        <span class="good">Good: > 80%</span>
+                    </div>
+                </div>
+
+                <div class="metric-explanation">
+                    <div class="metric-header">
+                        <i class="fas fa-function"></i>
+                        <h3>Function Length</h3>
+                    </div>
+                    <p>Average lines per function. Shorter functions are easier to understand, test, and maintain.</p>
+                    <div class="metric-range">
+                        <span class="good">Good: < 20 lines</span>
+                        <span class="warning">Warning: 20-50 lines</span>
+                        <span class="danger">Critical: > 50 lines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analyze Section -->
+    <section id="analyze" class="analyze-section">
+        <div class="container">
+            <h2 class="section-title">Analyze Your Python Code</h2>
+
+            <div class="analyze-container">
+                <div class="upload-panel">
+                    <form id="analyzeForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="projectName">
+                                <i class="fas fa-folder"></i> Project Name
+                            </label>
+                            <input type="text" id="projectName" name="projectName" placeholder="e.g., Student Assignment 1" required>
+                        </div>
+
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fab fa-python upload-icon"></i>
+                            <h3>Drop Python files here</h3>
+                            <p>or click to browse</p>
+                            <p class="upload-hint">Supports .py files and .ipynb notebooks</p>
+                            <input type="file" id="codeFile" name="codeFile" accept=".py,.ipynb" hidden>
+                            <div class="file-info" id="fileInfo" style="display: none;">
+                                <i class="fas fa-file-code"></i>
+                                <span id="fileName"></span>
+                                <button type="button" class="btn-remove" onclick="removeFile()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-analyze">
+                            <i class="fas fa-search"></i> Analyze Code
+                        </button>
+                    </form>
+                </div>
+
+                <div id="analysisResult" class="analysis-result-panel" style="display: none;">
+                    <h3>Analysis Results</h3>
+                    <div class="result-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batch Analysis Section -->
+    <section id="batch" class="batch-section">
+        <div class="container">
+            <h2 class="section-title">Batch Analysis</h2>
+            <p class="section-subtitle">Analyze multiple Python files at once - perfect for grading or code reviews</p>
+
+            <div class="batch-upload-container">
+                <form id="batchForm">
+                    <div class="batch-upload-area" id="batchUploadArea">
+                        <i class="fas fa-folder-open batch-icon"></i>
+                        <h3>Drop multiple Python files here</h3>
+                        <p>or click to select files</p>
+                        <p class="batch-hint">You can select up to 10 files at once</p>
+                        <input type="file" id="batchFiles" name="codeFiles" accept=".py,.ipynb" multiple hidden>
+                        <div id="batchFileList" class="batch-file-list"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="batchAnalyzeBtn" disabled>
+                        <i class="fas fa-cogs"></i> Analyze All Files
+                    </button>
+                </form>
+
+                <div id="batchResults" class="batch-results" style="display: none;">
+                    <h3>Batch Analysis Results</h3>
+                    <div class="batch-summary">
+                        <div class="summary-stat">
+                            <span class="stat-label">Files Analyzed</span>
+                            <span class="stat-value" id="filesAnalyzed">0</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="stat-label">Avg Complexity</span>
+                            <span class="stat-value" id="avgBatchComplexity">0</span>
+                        </div>
+                        <div class="summary-stat">
+                            <span class="stat-label">Total LOC</span>
+                            <span class="stat-value" id="totalBatchLOC">0</span>
+                        </div>
+                    </div>
+                    <div id="batchResultsList"></div>
+                    <button class="btn btn-secondary" onclick="exportBatchResults()">
+                        <i class="fas fa-download"></i> Export to CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title">Analysis Dashboard</h2>
+
+            <div class="dashboard-stats">
+                <div class="stat-card python-themed">
+                    <div class="stat-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalAnalyses">0</h3>
+                        <p>Total Analyses</p>
+                    </div>
+                </div>
+                <div class="stat-card complexity-themed">
+                    <div class="stat-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgComplexity">0</h3>
+                        <p>Avg Complexity</p>
+                    </div>
+                </div>
+                <div class="stat-card quality-themed">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgQualityScore">0%</h3>
+                        <p>Avg Quality Score</p>
+                    </div>
+                </div>
+                <div class="stat-card files-themed">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="filesProcessed">0</h3>
+                        <p>Files Processed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Complexity Distribution</h3>
+                    <canvas id="complexityChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Code Quality Trends</h3>
+                    <canvas id="qualityChart"></canvas>
+                </div>
+            </div>
+
+            <div class="recent-analyses">
+                <h3>Recent Analyses</h3>
+                <div class="analyses-list" id="recentAnalysesList">
+                    <!-- Recent analyses will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to Code Heuristics</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p class="switch-form">Don't have an account? <a href="#" id="showRegister">Register</a></p>
+            </form>
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <p class="switch-form">Already have an account? <a href="#" id="showLogin">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Code Heuristics</h3>
+                    <p>Advanced Python code analysis tool for educators and developers.</p>
+                    <p>Based on research for analyzing student submissions and code repositories.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#analyze">Single File Analysis</a></li>
+                        <li><a href="#batch">Batch Processing</a></li>
+                        <li><a href="#metrics">Metrics Guide</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Supported Metrics</h4>
+                    <ul>
+                        <li>Cyclomatic Complexity</li>
+                        <li>Nesting Depth</li>
+                        <li>Lines of Code</li>
+                        <li>Comment Coverage</li>
+                        <li>Function Analysis</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Built with the Code-Heuristics toolkit</p>
+                    <p>
+                        <a href="https://github.com/Yuan-Garcia/Code-Heuristics" target="_blank">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Code Heuristics. MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="js/app_new.js"></script>
+</body>
+</html>
