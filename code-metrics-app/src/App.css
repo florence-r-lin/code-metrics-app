@@ -126,12 +126,14 @@ header .subtitle {
 
 /* Summary cards */
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  display: flex;
+  flex-direction: row;
   gap: 1rem;
+  overflow-x: auto;
 }
 
 .card {
+  flex: 1 0 auto;
   background: #1e293b;
   border: 1px solid #334155;
   border-radius: 10px;
