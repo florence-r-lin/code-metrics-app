@@ -5,9 +5,9 @@
 }
 
 body {
-  background: #0f1117;
-  color: #e2e8f0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #484848;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   min-height: 100vh;
 }
 
@@ -24,44 +24,53 @@ body {
 }
 
 /* Header */
+header {
+  border-bottom: 3px solid #fdb913;
+  padding-bottom: 1rem;
+}
+
 header h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #fff;
+  color: #000000;
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: -0.5px;
 }
 
 header .subtitle {
-  color: #94a3b8;
+  color: #777777;
   margin-top: 0.25rem;
+  font-size: 0.95rem;
 }
 
 /* Dropzone */
 .dropzone {
-  border: 2px dashed #334155;
-  border-radius: 12px;
+  border: 2px dashed #dedede;
+  border-radius: 4px;
   padding: 3rem 2rem;
   text-align: center;
   cursor: pointer;
-  color: #64748b;
+  color: #777777;
   font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  background: #efefef;
   transition: border-color 0.2s, background 0.2s;
 }
 
 .dropzone:hover,
 .dropzone.dragging {
-  border-color: #6366f1;
-  background: #1e1b4b22;
-  color: #a5b4fc;
+  border-color: #fdb913;
+  background: #fff8e6;
+  color: #484848;
 }
 
 .dropzone.has-file {
-  border-color: #22c55e;
-  background: #14532d22;
-  color: #86efac;
+  border-color: #fdb913;
+  background: #fff8e6;
+  color: #000000;
 }
 
 .file-icon {
@@ -69,38 +78,40 @@ header .subtitle {
 }
 
 .file-name {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Error */
 .error {
-  color: #f87171;
-  background: #450a0a44;
-  border: 1px solid #7f1d1d;
-  border-radius: 8px;
+  color: #f15f12;
+  background: #fff3ee;
+  border: 1px solid #f15f12;
+  border-radius: 4px;
   padding: 0.75rem 1rem;
 }
 
 /* Analyze button */
 .analyze-btn {
   align-self: flex-start;
-  background: #6366f1;
-  color: #fff;
+  background: #000000;
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition: background 0.2s, opacity 0.2s;
 }
 
 .analyze-btn:hover:not(:disabled) {
-  background: #4f46e5;
+  background: #fdb913;
+  color: #000000;
 }
 
 .analyze-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
@@ -113,30 +124,34 @@ header .subtitle {
 
 .results h2 {
   font-size: 1.2rem;
-  font-weight: 600;
-  color: #cbd5e1;
+  font-weight: 700;
+  color: #000000;
+  font-family: Georgia, 'Times New Roman', serif;
+  border-left: 4px solid #fdb913;
+  padding-left: 0.6rem;
 }
 
 .file-count {
   font-size: 0.85rem;
   font-weight: 400;
-  color: #64748b;
+  color: #777777;
   margin-left: 0.5rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Summary cards */
 .cards {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
-  overflow-x: auto;
 }
 
 .card {
-  flex: 1 0 auto;
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 10px;
+  flex: 0 0 auto;
+  background: #efefef;
+  border: 1px solid #dedede;
+  border-top: 3px solid #fdb913;
+  border-radius: 4px;
   padding: 1rem;
   text-align: center;
 }
@@ -144,20 +159,22 @@ header .subtitle {
 .card-value {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #a5b4fc;
+  color: #000000;
 }
 
 .card-label {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #777777;
   margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* Table */
 .table-wrap {
   overflow-x: auto;
-  border-radius: 10px;
-  border: 1px solid #334155;
+  border-radius: 4px;
+  border: 1px solid #dedede;
 }
 
 table {
@@ -167,22 +184,22 @@ table {
 }
 
 thead {
-  background: #1e293b;
+  background: #000000;
 }
 
 th {
   padding: 0.75rem 1rem;
   text-align: left;
-  color: #94a3b8;
+  color: #ffffff;
   font-weight: 600;
   white-space: nowrap;
-  border-bottom: 1px solid #334155;
+  border-bottom: 3px solid #fdb913;
 }
 
 td {
   padding: 0.65rem 1rem;
-  border-bottom: 1px solid #1e293b;
-  color: #cbd5e1;
+  border-bottom: 1px solid #efefef;
+  color: #484848;
   white-space: nowrap;
 }
 
@@ -191,18 +208,18 @@ tr:last-child td {
 }
 
 tr:hover td {
-  background: #1e293b88;
+  background: #fff8e6;
 }
 
 tr.empty-file td {
-  color: #475569;
+  color: #777777;
   font-style: italic;
 }
 
 .filename {
   font-family: 'SF Mono', 'Fira Code', monospace;
   font-size: 0.8rem;
-  color: #93c5fd;
+  color: #0081a2;
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
