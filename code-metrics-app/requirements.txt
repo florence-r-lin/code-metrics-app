@@ -22,6 +22,7 @@ numpy==1.26.4
 
 # Authentication
 pyjwt==2.8.0
+bcrypt==4.0.1
 
 # Validation
 pydantic==2.6.1

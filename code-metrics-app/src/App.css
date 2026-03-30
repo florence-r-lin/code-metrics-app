@@ -35,6 +35,73 @@ header .subtitle {
   margin-top: 0.25rem;
 }
 
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.login-link {
+  color: #a5b4fc;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.login-card {
+  background: #0b1220;
+  border: 1px solid #1f2937;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-card h2 {
+  margin-bottom: 1rem;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-card label {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.login-card input {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #06121a;
+  color: #e2e8f0;
+}
+
+.login-switch {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.login-switch button {
+  background: transparent;
+  border: none;
+  color: #a5b4fc;
+  cursor: pointer;
+  font-weight: 600;
+}
+
 /* Dropzone */
 .dropzone {
   border: 2px dashed #334155;

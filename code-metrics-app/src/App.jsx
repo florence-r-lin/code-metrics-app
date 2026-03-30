@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import './App.css'
 
 const NUMERIC_KEYS = [
@@ -63,7 +64,12 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <h1>Code Metrics</h1>
+        <div className="header-row">
+          <h1>Code Metrics</h1>
+          <nav>
+            <Link to="/login" className="login-link">Login</Link>
+          </nav>
+        </div>
         <p className="subtitle">Upload a .zip of Python files to analyze</p>
       </header>
 
