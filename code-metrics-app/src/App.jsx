@@ -64,7 +64,7 @@ export default function App() {
     <div className="app">
       <header>
         <h1>Code Metrics</h1>
-        <p className="subtitle">Upload a .zip of Python files to analyze</p>
+        <p className="subtitle">Harvey Mudd College &mdash; Upload a .zip of Python files to analyze</p>
       </header>
 
       <div
