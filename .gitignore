@@ -75,3 +75,5 @@ flask_session/
 # Jupyter / notebooks
 ############################
 .ipynb_checkpoi_
+
+code-metrics-venv
