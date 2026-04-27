@@ -9,6 +9,7 @@ flask-cors==4.0.0
 # Database
 sqlalchemy==2.0.27
 psycopg2-binary==2.9.9
+PyMySQL==1.1.0
 
 # HTTP Requests
 requests==2.31.0

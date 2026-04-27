@@ -13,6 +13,10 @@ const NUMERIC_KEYS = [
 ]
 
 export default function App() {
+  const [currentUser, setCurrentUser] = useState(null)
+  const [authToken, setAuthToken] = useState(() => localStorage.getItem('authToken'))
+  const [showAuth, setShowAuth] = useState(false)
+  const [authMode, setAuthMode] = useState('login') // or 'register'
   const [file, setFile] = useState(null)
   const [dragging, setDragging] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -36,6 +40,44 @@ export default function App() {
     handleFile(e.dataTransfer.files[0])
   }
 
+  async function handleLogin({ email, password }) {
+    try {
+      const res = await fetch('http://localhost:5001/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Login failed')
+      setCurrentUser(data.user)
+      setAuthToken(data.token)
+      localStorage.setItem('authToken', data.token)
+      localStorage.setItem('userData', JSON.stringify(data.user))
+      setShowAuth(false)
+    } catch (err) {
+      alert(err.message)
+    }
+  }
+
+  async function handleRegister({ name, email, password }) {
+    try {
+      const res = await fetch('http://localhost:5001/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Registration failed')
+      setCurrentUser(data.user)
+      setAuthToken(data.token)
+      localStorage.setItem('authToken', data.token)
+      localStorage.setItem('userData', JSON.stringify(data.user))
+      setShowAuth(false)
+    } catch (err) {
+      alert(err.message)
+    }
+  }
+
   async function analyze() {
     if (!file) return
     setLoading(true)
@@ -46,8 +88,12 @@ export default function App() {
     form.append('file', file)
 
     try {
+      const headers = {}
+      if (authToken) headers['Authorization'] = `Bearer ${authToken}`
+
       const res = await fetch('http://localhost:5001/analyze', {
         method: 'POST',
+        headers,
         body: form,
       })
       const data = await res.json()
@@ -63,7 +109,16 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <h1>Code Metrics</h1>
+        <div className="header-row">
+          <h1>Code Metrics</h1>
+          <div>
+            {currentUser ? (
+              <button onClick={() => { setCurrentUser(null); setAuthToken(null); localStorage.removeItem('authToken'); localStorage.removeItem('userData') }}>Logout ({currentUser.name})</button>
+            ) : (
+              <button onClick={() => { setShowAuth(true); setAuthMode('login') }}>Login / Register</button>
+            )}
+          </div>
+        </div>
         <p className="subtitle">Harvey Mudd College &mdash; Upload a .zip of Python files to analyze</p>
       </header>
 
@@ -88,6 +143,8 @@ export default function App() {
       </div>
 
       {error && <p className="error">{error}</p>}
+
+      {showAuth && <AuthModal mode={authMode} onClose={() => setShowAuth(false)} onLogin={handleLogin} onRegister={handleRegister} />}
 
       <button className="analyze-btn" onClick={analyze} disabled={!file || loading}>
         {loading ? 'Analyzing…' : 'Analyze'}
@@ -150,6 +207,53 @@ function Results({ result }) {
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  )
+}
+
+function AuthModal({ mode = 'login', onClose, onLogin, onRegister }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [localMode, setLocalMode] = useState(mode)
+
+  const isRegister = localMode === 'register'
+
+  function submit(e) {
+    e.preventDefault()
+    if (isRegister) {
+      onRegister({ name, email, password })
+    } else {
+      onLogin({ email, password })
+    }
+  }
+
+  return (
+    <div className="auth-modal">
+      <div className="auth-content">
+        <button className="close" onClick={onClose}>✕</button>
+        <h3>{isRegister ? 'Register' : 'Login'}</h3>
+        <form onSubmit={submit}>
+          <div style={{ marginBottom: '0.5rem' }}>
+            <a href="#" onClick={(e) => { e.preventDefault(); setLocalMode(isRegister ? 'login' : 'register') }}>{isRegister ? 'Already have an account? Login' : 'Create an account'}</a>
+          </div>
+          {isRegister && (
+            <div>
+              <label>Name</label>
+              <input value={name} onChange={e => setName(e.target.value)} required />
+            </div>
+          )}
+          <div>
+            <label>Email</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+          </div>
+          <div>
+            <label>Password</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+          </div>
+          <button type="submit">{isRegister ? 'Register' : 'Login'}</button>
+        </form>
       </div>
     </div>
   )
