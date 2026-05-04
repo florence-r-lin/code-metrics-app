@@ -1,36 +1,63 @@
-# Web Framework
+# Synchronized dependency manifest
+# Backend (Python) dependencies - kept in pip/requirements format
+# Generated/verified: 2026-04-27
+
+# Web framework + related
 flask==3.0.2
 flask-cors==4.0.0
-
-# OR use FastAPI instead:
-# fastapi==0.109.2
-# uvicorn[standard]==0.27.1
+werkzeug==3.1.8
+jinja2==3.1.6
+itsdangerous==2.2.0
+click==8.3.3
 
 # Database
 sqlalchemy==2.0.27
 psycopg2-binary==2.9.9
 PyMySQL==1.1.0
+mysql-connector-python
 
-# HTTP Requests
+# HTTP requests & utilities
 requests==2.31.0
-
-# Environment Variables
 python-dotenv==1.0.1
 
-# Data Processing
+# Data processing
 pandas==2.2.0
 numpy==1.26.4
 
-# Authentication
-pyjwt==2.8.0
-
-# Validation
+# Authentication / Validation
+PyJWT==2.8.0
 pydantic==2.6.1
 
-# Testing
+# Testing / CI
 pytest==8.0.0
 pytest-cov==4.1.0
 
-# Code Quality
+# Code quality / tooling
 black==24.2.0
 flake8==7.0.0
+
+# ------------------------------------------------------------------
+# Frontend (npm) dependencies
+# The frontend dependencies are managed with npm/yarn in package.json.
+# This section documents the packages and versions from
+# code-metrics-app/package.json for convenience only.
+# To install frontend deps run: `npm install` in the `code-metrics-app` folder.
+#
+# Dependencies:
+# - react: ^19.2.0
+# - react-dom: ^19.2.0
+#
+# DevDependencies:
+# - @eslint/js: ^9.39.1
+# - @types/react: ^19.2.7
+# - @types/react-dom: ^19.2.3
+# - @vitejs/plugin-react: ^5.1.1
+# - eslint: ^9.39.1
+# - eslint-plugin-react-hooks: ^7.0.1
+# - eslint-plugin-react-refresh: ^0.4.24
+# - globals: ^16.5.0
+# - vite: ^8.0.0-beta.13
+
+# Notes:
+# - Keep Python server deps in this file and run `pip install -r requirements.txt`.
+# - Keep frontend deps in package.json and run `npm install` in the frontend folder.

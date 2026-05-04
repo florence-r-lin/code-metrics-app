@@ -2,28 +2,61 @@ import os
 import json
 import datetime
 import re
+import mysql.connector
 
 from sqlalchemy import create_engine, Column, String, Date, Time, Text, Integer, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.engine import URL
 
 # Read DB connection info from environment. Example DB_URL:
-# mysql+pymysql://user:password@host:3306/dbname
+# mysql+mysqlconnector://user:password@host:3306/dbname
 DB_URL = os.environ.get("DATABASE_URL") or os.environ.get("DB_URL")
+
+# Prefer explicit environment variables; build a SQLAlchemy URL if a full
+# DATABASE_URL isn't provided. Use the mysql+mysqlconnector dialect so
+# SQLAlchemy will use `mysql.connector` under the hood.
 if not DB_URL:
     DB_USER = os.environ.get("DB_USER")
     DB_PASS = os.environ.get("DB_PASS")
-    DB_HOST = os.environ.get("DB_HOST")
+    DB_HOST = os.environ.get("DB_HOST") or "ark.cs.hmc.edu"
     DB_PORT = os.environ.get("DB_PORT", "3306")
     DB_NAME = os.environ.get("DB_NAME")
     if DB_USER and DB_PASS and DB_HOST and DB_NAME:
-        DB_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+        try:
+            port_val = int(DB_PORT) if DB_PORT else None
+        except Exception:
+            port_val = None
+        DB_URL = URL.create(
+            drivername="mysql+mysqlconnector",
+            username=DB_USER,
+            password=DB_PASS,
+            host=DB_HOST,
+            port=port_val,
+            database=DB_NAME,
+        )
+
+# Configure TLS for mysql-connector-python. If `DB_TLS_CA` is set, it will be
+# passed as `ssl_ca` to the connector to verify the server certificate. By
+# default TLS is required; set `DB_REQUIRE_TLS=0` to disable (not recommended).
+connect_args = {}
+DB_REQUIRE_TLS = os.environ.get("DB_REQUIRE_TLS", "1")
+DB_TLS_CA = os.environ.get("DB_TLS_CA")
+if DB_REQUIRE_TLS != "0":
+    if DB_TLS_CA:
+        connect_args["ssl_ca"] = DB_TLS_CA
+    else:
+        # Ask the connector to use TLS (do not disable). Some connector
+        # versions will negotiate TLS if available when ssl_disabled=False.
+        connect_args["ssl_disabled"] = False
 
 engine = None
 SessionLocal = None
 Base = declarative_base()
 
 if DB_URL:
-    engine = create_engine(DB_URL, pool_pre_ping=True)
+    # pass connector-specific connect_args to SQLAlchemy; SQLAlchemy accepts
+    # either a string URL or a URL object created above.
+    engine = create_engine(DB_URL, pool_pre_ping=True, connect_args=(connect_args if connect_args else None))
     SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 
