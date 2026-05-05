@@ -7,6 +7,8 @@ import mysql.connector
 from sqlalchemy import create_engine, Column, String, Date, Time, Text, Integer, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.engine import URL
+from dotenv import load_dotenv
+load_dotenv()
 
 # Read DB connection info from environment. Example DB_URL:
 # mysql+mysqlconnector://user:password@host:3306/dbname
